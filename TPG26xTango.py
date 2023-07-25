@@ -94,26 +94,26 @@ class TPG26xTango(Device):
         new_time = time()
         delay = np.round(new_time-self._time[0])
         self._time[0] = new_time
-        self.debug_stream("Delay is: %.4f",delay)
+        #self.debug_stream("Delay is: %.4f",delay)
         for i in np.arange(delay):
             self._minute_array = np.roll(self._minute_array,-1)
             self._minute_array[-1] = pressure
             
-        self.debug_stream('Delay since last hour_array update is %d / %d s', new_time - self._time[1], 60)
+        #self.debug_stream('Delay since last hour_array update is %d / %d s', new_time - self._time[1], 60)
         if new_time - self._time[1] >= (60):
             self._hour_array = np.roll(self._hour_array,-1)
             self._hour_array[-1] = self._minute_array[0]
             self._time[1] = new_time
             self.info_stream("Hour array was updated. New value is %.6f, new time is %d",self._hour_array[-1],new_time)
         
-        self.debug_stream('Delay since last day_array update is %d / %d s', new_time - self._time[2],(60*60))    
+        #self.debug_stream('Delay since last day_array update is %d / %d s', new_time - self._time[2],(60*60))    
         if new_time - self._time[2] >= (60*60):
             self._day_array = np.roll(self._day_array,-1)
             self._day_array[-1] = self._hour_array[0]
             self._time[2] = new_time
             self.info_stream("Day array was updated. New value is %.6f, new time is %d",self._day_array[-1],new_time)
         
-        self.debug_stream('Delay since last month_array update is %d / %d s', new_time - self._time[3], (60*60*24))
+        #self.debug_stream('Delay since last month_array update is %d / %d s', new_time - self._time[3], (60*60*24))
         if new_time - self._time[3] >= (60*60*24):
             self._month_array = np.roll(self._month_array,-1)
             self._month_array[-1] = self._day_array[0]
