@@ -1,4 +1,4 @@
-from .TPG26xTango import TPG26xTango
+from .TPG26xTangoNet import TPG26xTango
 
 
 def main():
