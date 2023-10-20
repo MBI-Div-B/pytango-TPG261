@@ -1,9 +1,9 @@
-from .TPG26xTangoNet import TPG26xTango
+from .TPG261 import TPG261
 
 
 def main():
     import sys
     import tango.server
 
-    args = ["TPG26xTango"] + sys.argv[1:]
-    tango.server.run((TPG26xTango,), args=args)
+    args = ["TPG261"] + sys.argv[1:]
+    tango.server.run((TPG261,), args=args)

@@ -1,1 +1,1 @@
-# pytango-TPG26x
+# pytango-TPG261

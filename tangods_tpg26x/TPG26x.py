@@ -7,6 +7,7 @@ Adapted for python3 by MBI div B
 
 import time
 import serial
+import socket
 
 # Code translations constants
 MEASUREMENT_STATUS = {
@@ -201,6 +202,8 @@ class TPG26x(object):
             test_string_out += self._get_data().rstrip(self.ENQ)
         self._send_command(self.ETX)
         return test_string_out == "a1"
+    
+class
 
 
 class TPG262(TPG26x):
