@@ -2,7 +2,6 @@
 
 from tango import AttrQuality, AttrWriteType, DispLevel, DevState, DebugIt
 from tango.server import Device, attribute, command, pipe, device_property
-import numpy as np
 from time import time
 
 import socket
@@ -11,9 +10,7 @@ import serial
 
 class TPG261(Device):
     ConnectType = device_property(
-        dtype="str",
-        default_value="serial",
-        doc="either `net` or `serial`"
+        dtype="str", default_value="serial", doc="either `net` or `serial`"
     )
 
     SerialPort = device_property(
@@ -31,9 +28,9 @@ class TPG261(Device):
     HostName = device_property(
         dtype="str",
         default_value="device.domain",
-        doc="Hostname / IP address of device",      
+        doc="Hostname / IP address of device",
     )
-    
+
     PortNumber = device_property(
         dtype="int",
         default_value=2001,
@@ -61,19 +58,27 @@ class TPG261(Device):
         # ToDo: implement somthing that uses channels to distingush between 261 and 262
 
         if self.ConnectType == "serial":
-            self.con = serial.Serial(port=self.SerialPort, baudrate=self.Baudrate, timeout=1)
+            self.con = serial.Serial(
+                port=self.SerialPort, baudrate=self.Baudrate, timeout=1
+            )
             self.set_state(DevState.ON)
-            self.info_stream("Connected to serial port {:s} with baudrate {:d}".format(self.SerialPort, self.Baudrate))
+            self.info_stream(
+                "Connected to serial port {:s} with baudrate {:d}".format(
+                    self.SerialPort, self.Baudrate
+                )
+            )
         elif self.ConnectType == "net":
             self.con = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             self.con.connect((self.HostName, self.PortNumber))
             self.set_state(DevState.ON)
-            self.info_stream("Connected to socket hostname {:s} at port {:d}".format(self.HostName, self.PortNumber))
+            self.info_stream(
+                "Connected to socket hostname {:s} at port {:d}".format(
+                    self.HostName, self.PortNumber
+                )
+            )
         else:
             self.set_state(DevState.OFF)
-            self.error_stream(
-                "Unknown `ConnectType` {:s}".format(self.ConnectType)
-            )
+            self.error_stream("Unknown `ConnectType` {:s}".format(self.ConnectType))
 
     def delete_device(self):
         self.info_stream("close serial")
@@ -87,7 +92,7 @@ class TPG261(Device):
 
         self.debug_stream("Returning: %.6f", pressure)
         return pressure
-    
+
     def _cr_lf(self, string):
         """Pad carriage return and line feed to a string
         :param string: String to pad
@@ -110,12 +115,13 @@ class TPG261(Device):
             message = "Serial communication returned negative acknowledge"
             raise IOError(message)
         elif response != self._cr_lf(self.ACK):
-            message = "Communication returned unknown response:\n{}" "".format(repr(response))
+            message = "Communication returned unknown response:\n{}" "".format(
+                repr(response)
+            )
             raise IOError(message)
 
     def _get_data(self):
-        """Get the data that is ready on the device
-        """
+        """Get the data that is ready on the device"""
         command = self.ENQ
         if self.ConnectType == "net":
             self.con.send(command.encode())

@@ -1,25 +1,24 @@
 from setuptools import setup, find_packages
 
 setup(
-    name="tangods_tpg26x",
+    name="tangods_tpg261",
     version="0.0.1",
-    description="Tango device for Pfeiffer TPG26x",
+    description="Tango device for Pfeiffer TPG261",
     author="Marin Borchert",
     author_email="",
     python_requires=">=3.6",
-    entry_points={"console_scripts": ["TPG26xTango = tangods_tpg26x:main"]},
+    entry_points={"console_scripts": ["TPG261Tango = tangods_tpg261:main"]},
     license="MIT",
-    packages=["tangods_tpg26x"],
+    packages=["tangods_tpg261"],
     install_requires=[
         "pytango",
-        "numpy",
         "pyserial",
     ],
-    url="https://github.com/MBI-Div-b/pytango-TPG26x",
+    url="https://github.com/MBI-Div-b/pytango-TPG261",
     keywords=[
         "tango device",
         "tango",
         "pytango",
-        "TPG26x",
+        "TPG261",
     ],
 )
