@@ -7,7 +7,7 @@ setup(
     author="Marin Borchert",
     author_email="",
     python_requires=">=3.6",
-    entry_points={"console_scripts": ["TPG261Tango = tangods_tpg261:main"]},
+    entry_points={"console_scripts": ["TPG261 = tangods_tpg261:main"]},
     license="MIT",
     packages=["tangods_tpg261"],
     install_requires=[
